@@ -1,5 +1,6 @@
 import React from 'react';
 import LogoutBar from './logout-bar/LogoutBar';
+import NewPostForm from './new-post-form/NewPostForm';
 
 import Button from 'components/button/Button';
 
@@ -11,6 +12,7 @@ class MainPage extends React.Component {
         return (
             <div className="page-main">
                 <LogoutBar />
+                <NewPostForm />
             </div>
         );
     }
