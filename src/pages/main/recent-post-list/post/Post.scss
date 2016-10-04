@@ -1,0 +1,86 @@
+@import '../../../../styles/colors';
+
+.post {
+    display: block;
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 800px;
+
+    background-color: $fb-red;
+
+    .author-and-likes {
+        display: flex;
+        justify-content: space-between;
+
+        padding: 10px 0 5px;
+        font-size: 18px;
+
+        > .author {
+            text-align: right;
+            color: #555;
+        }
+        > .likes {
+            color: $fb-blue;
+            text-align: right;
+
+            cursor: pointer;
+            :hover {
+                color: red;
+            }
+        }
+    }
+
+    > .content {
+        background-color: white;
+        text-align: left;
+        display: block;
+        max-width: 780px;
+        margin: auto;
+        font-size: 18px;
+        padding: 15px 10px;
+        line-height: 1.5;
+    }
+
+    > .comment-list {
+        padding-left: 12%;
+
+        > .comment {
+            margin-top: 10px;
+
+            > .content {
+                background-color: white;
+                text-align: left;
+                display: block;
+                max-width: 780px;
+                margin: auto;
+                font-size: 18px;
+                padding: 15px 10px;
+                line-height: 1.5;
+            }
+        }
+    }
+
+    > .comment-form {
+        margin-top: 30px;
+        display: block;
+        padding: 15px;
+        max-width: 800px;
+
+        background-color: $fb-yellow; 
+
+        textarea {
+            display: block;
+            width: 750px;
+            max-width: 750px;
+            height: 80px;
+            margin: auto;
+            font-size: 18px;
+            padding: 5px 10px;
+            line-height: 1.5;
+        }
+
+        .button-submit-comment {
+            margin: 10px auto -10px;
+        }
+    }
+}

@@ -1,8 +1,7 @@
 import React from 'react';
 import LogoutBar from './logout-bar/LogoutBar';
 import NewPostForm from './new-post-form/NewPostForm';
-
-import Button from 'components/button/Button';
+import RecentPostList from './recent-post-list/RecentPostList';
 
 import './MainPage.scss';
 
@@ -13,6 +12,7 @@ class MainPage extends React.Component {
             <div className="page-main">
                 <LogoutBar />
                 <NewPostForm />
+                <RecentPostList />
             </div>
         );
     }
