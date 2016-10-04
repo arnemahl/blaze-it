@@ -1,0 +1,10 @@
+@import '../../../styles/colors';
+
+.logout-bar {
+
+    background-color: $fb-red;
+
+    .button-log-out {
+        margin: 30px;
+    }
+}
