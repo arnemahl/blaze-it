@@ -9,12 +9,14 @@ export default class RecentPostList extends React.Component {
         recentPosts: [
             {
                 id: 'w54gh',
+                timestamp: Date.now(),
                 content: 'Dummy-post',
                 author: 'dummy-user',
                 likes: 1
             },
             {
                 id: 'b6was',
+                timestamp: Date.now(),
                 content: 'Dummy-post',
                 author: 'dummy-user',
                 likes: 5

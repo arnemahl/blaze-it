@@ -16,12 +16,13 @@
         font-size: 18px;
 
         > .author {
-            text-align: right;
+            color: $fb-yellow;
+        }
+        > .date {
             color: #555;
         }
         > .likes {
             color: $fb-blue;
-            text-align: right;
 
             cursor: pointer;
             :hover {

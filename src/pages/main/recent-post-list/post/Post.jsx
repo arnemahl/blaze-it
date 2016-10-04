@@ -15,6 +15,7 @@ class AuthorAndLikes extends React.Component {
         return (
             <div className="author-and-likes">
                 <span className="author">@{item.author}</span>
+                <span className="date">{new Date(item.timestamp).toISOString()}</span>
                 <span className="likes" onClick={this.addLike}>{item.likes || 0} &#10084;</span>
             </div>
         );
@@ -28,12 +29,14 @@ class Post extends React.Component {
         comments: [
             {
                 id: 'av984',
+                timestamp: Date.now(),
                 content: 'Dummy comment',
                 author: 'dummy-user',
                 likes: 0
             },
             {
                 id: 'va89s',
+                timestamp: Date.now(),
                 content: 'Dummy comment',
                 author: 'dummy-user',
                 likes: 0
