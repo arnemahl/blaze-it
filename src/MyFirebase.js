@@ -1,11 +1,11 @@
 import firebase from 'firebase';
 
 const config = {
-    apiKey: "AIzaSyDnycLqte3CiINIbtyJPeiZph0V18hzF8k",
-    authDomain: "iterate-workshop.firebaseapp.com",
-    databaseURL: "https://iterate-workshop.firebaseio.com",
-    storageBucket: "iterate-workshop.appspot.com",
-    messagingSenderId: "672693345005"
+    apiKey: "AIzaSyCu8ts_aKTdGmrVzxn8nejJfnL84gEVs7Y",
+    authDomain: "wooperate.firebaseapp.com",
+    databaseURL: "https://wooperate.firebaseio.com",
+    storageBucket: "wooperate.appspot.com",
+    messagingSenderId: "152902163480"
 };
 
 export const FIREBASE_APP = firebase.initializeApp(config);
