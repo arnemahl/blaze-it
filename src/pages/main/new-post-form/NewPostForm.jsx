@@ -1,16 +1,40 @@
 import React from 'react';
 import Button from 'components/button/Button';
 
+import {FIREBASE_REF, TIMESTAMP} from 'MyFirebase';
+import store from 'store/Store';
+
 import './NewPostForm.scss';
 
 export default class NewPostForm extends React.Component {
 
     state = {
+        submitting: false,
         content: ''
     }
 
     onSubmit = () => {
-        console.log('TODO: Implement post submit');
+        if (this.state.submitting) {
+            return;
+        }
+
+        this.setState({ submitting: true });
+
+        const post = {
+            timestamp: TIMESTAMP,
+            content: this.state.content,
+            author: store.currentUserId
+        };
+
+        FIREBASE_REF.child('posts').push(post, this.onSubmitSuccess);
+    }
+
+    onSubmitSuccess = () => {
+        console.log('success');
+        this.setState({
+            submitting: false,
+            content: ''
+        });
     }
 
     onContentChange = (event) => {
@@ -30,6 +54,13 @@ export default class NewPostForm extends React.Component {
                 <Button className="button-submit-post" onClick={this.onSubmit}>
                     Submit post
                 </Button>
+
+                {this.state.submitting &&
+                    <div className="feedback">
+                        Please wait...
+                    </div>
+                }
+
             </form>
         );
     }

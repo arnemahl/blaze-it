@@ -4,6 +4,7 @@
     display: block;
     margin: 50px auto;
     padding: 20px;
+    padding-bottom: 0;
     max-width: 800px;
 
     background-color: $fb-yellow; 
@@ -20,6 +21,10 @@
     }
 
     .button-submit-post {
-        margin: 15px auto -10px;
+        margin: 15px auto;
+    }
+
+    .feedback {
+        padding-bottom: 15px;
     }
 }
