@@ -44,17 +44,16 @@ class CreateUserForm extends Component {
     onCreateUser = () => {
         const {email, password, passwordRepeat} = this.state;
 
-        console.log('Create user:\n\temail:', email, '\n\tpassword:', password, '\n\tpasswordRepeat:', passwordRepeat);
-
-        // TODO: Authentication, create user:
-        // Write code to create a new user in your Firebase app here
-
         if (password !== passwordRepeat) {
             this.setState({
                 errorMessage: "The passwords don't match"
             });
             return;
         }
+
+        this.setState({
+            errorMessage: "Please wait..."
+        });
 
         FIREBASE_APP.auth().createUserWithEmailAndPassword(email, password).catch(error => {
             // Failed to create user
@@ -90,10 +89,9 @@ class LogInForm extends Component {
     onLogin = () => {
         const {email, password} = this.state;
 
-        console.log('Log in:\n\temail:', email, '\n\tpassword:', password);
-
-        // TODO: Authentication, log in
-        // Write code to log in to your Firebase app here
+        this.setState({
+            errorMessage: "Please wait..."
+        });
 
         FIREBASE_APP.auth().signInWithEmailAndPassword(email, password).catch(error => {
             // Not logged in
@@ -116,9 +114,6 @@ class LogInForm extends Component {
         );
     }
 }
-
-// TODO: Authentication, listen for logged in state
-// For example right here, or somewhere else if you want
 
 FIREBASE_APP.auth().onAuthStateChanged((user) => {
     if (!user) {
@@ -153,8 +148,6 @@ export default class LoginPage extends Component {
 
     render() {
         const {showLoginForm} = this.state;
-
-        console.log('showLoginForm:', showLoginForm); // DEBUG
 
         return (
             <div className={'page-login ' + (showLoginForm ? 'log-in' : 'create-user')}>

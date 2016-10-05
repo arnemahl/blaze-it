@@ -11,9 +11,7 @@ export default class LogoutBar extends React.Component {
     }
 
     onLogOut = () => {
-        const logoutSuccess = () => {
-            console.log('logged out');
-        };
+        const logoutSuccess = () => {};
         const logoutError = (error) => {
             this.setState({ logoutErrorMessage: error.message });
         };
