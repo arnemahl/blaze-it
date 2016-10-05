@@ -1,4 +1,4 @@
-# Blaze-it
+# Wooperate
 
 Simple imitation of [woop-frontend](https://github.com/iterate/woop-frontend).
 
