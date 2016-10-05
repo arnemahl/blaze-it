@@ -3,31 +3,32 @@ import Post from './post/Post';
 
 import './RecentPostList.scss';
 
+import {FIREBASE_REF} from 'MyFirebase';
+
 export default class RecentPostList extends React.Component {
 
     state = {
-        recentPosts: [
-            {
-                id: 'w54gh',
-                timestamp: Date.now(),
-                content: 'Dummy-post',
-                author: 'dummy-user',
-                likes: 1
-            },
-            {
-                id: 'b6was',
-                timestamp: Date.now(),
-                content: 'Dummy-post',
-                author: 'dummy-user',
-                likes: 5
-            }
-        ]
+        posts: []
+    }
+
+    componentWillMount() {
+        // TODO order by time since last update, ascending
+        FIREBASE_REF.child('posts').limitToFirst(20).on('value', this.receivePosts);
+    }
+
+    receivePosts = (snap) => {
+        const posts = snap.val();
+        const postsArray = Object.keys(posts).map(id => {
+            return { id, ...posts[id] };
+        });
+
+        this.setState({ posts: postsArray });
     }
 
     render() {
         return (
             <div className="recent-post-list">
-                {this.state.recentPosts.map(post =>
+                {this.state.posts.map(post =>
                     <Post key={post.id} post={post} />
                 )}
             </div>

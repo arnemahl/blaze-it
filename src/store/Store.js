@@ -1,7 +1,9 @@
 import Pockito from 'pockito';
 
 const {Listenable} = Pockito.Reactito;
-const {string} = Pockito.Validators;
+const {string, object} = Pockito.Validators;
+
+const post = object; // TODO: Shape
 
 const store = new Listenable({
     initialState: {
@@ -22,6 +24,11 @@ const store = new Listenable({
             password: string,
             passwordRepeat: string
         }
+    }),
+
+    posts: new Listenable({
+        univalidator: post,
+        initialState: {}
     })
 });
 
