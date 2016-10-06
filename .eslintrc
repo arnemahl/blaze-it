@@ -55,7 +55,7 @@
         "no-redeclare": 1,
         "no-sequences": 1,
         "no-trailing-spaces": 0,
-        "no-undef": 1,
+        "no-undef": 2,
         "no-undef-init": 1,
         "no-undefined": 1,
         "no-underscore-dangle": 0,

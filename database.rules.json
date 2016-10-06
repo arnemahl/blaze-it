@@ -1,6 +1,16 @@
 {
-  "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
-  }
+    "rules": {
+        ".read": "auth != null",
+        ".write": "auth != null && !data.exists()",
+
+        "posts": {
+        },
+        "comments-to": {
+            "$post-id": {
+                "$comment-id": {
+                    ".write": "!data.exists() || data.child('author').val() === auth.uid"
+                }
+            }
+        }
+    }
 }
