@@ -1,6 +1,10 @@
 import React from 'react';
 import Button from 'components/button/Button';
 
+import store from 'store/Store';
+
+import {FIREBASE_REF, TIMESTAMP} from 'MyFirebase';
+
 import './Post.scss';
 
 class AuthorAndLikes extends React.Component {
@@ -26,22 +30,32 @@ class Post extends React.Component {
 
     state = {
         commentContent: '',
-        comments: [
-            {
-                id: 'av984',
-                timestamp: Date.now(),
-                content: 'Dummy comment',
-                author: 'dummy-user',
-                likes: 0
-            },
-            {
-                id: 'va89s',
-                timestamp: Date.now(),
-                content: 'Dummy comment',
-                author: 'dummy-user',
-                likes: 0
-            }
-        ]
+        submitting: false,
+        comments: {}
+    }
+
+    componentWillMount() {
+        const {post} = this.props;
+
+        FIREBASE_REF.child('comments-to').child(post.id).on('child_added', this.receiveComment);
+        FIREBASE_REF.child('comments-to').child(post.id).on('child_changed', this.receiveComment);
+        FIREBASE_REF.child('comments-to').child(post.id).on('child_removed', this.removeComment);
+    }
+
+    receiveComment = (snap) => {
+        const comments = {
+            ...this.state.comments,
+            [snap.ref]: snap.val()
+        };
+
+        this.setState({ comments });
+    }
+    removeComment = (snap) => {
+        const {...comments} = this.state.comments;
+
+        delete comments[snap.ref];
+
+        this.setState({ comments });
     }
 
     onCommentChange = (event) => {
@@ -51,11 +65,36 @@ class Post extends React.Component {
     }
 
     onSubmitComment = () => {
-        console.log('TODO: Impelment submit comment');
+        if (this.state.submitting) {
+            return;
+        }
+
+        this.setState({ submitting: true });
+
+        const comment = {
+            timestamp: TIMESTAMP,
+            content: this.state.commentContent,
+            author: store.currentUserId
+        };
+
+        const {post} = this.props;
+
+        FIREBASE_REF.child('comments-to').child(post.id).push(comment, this.onSubmitCommentSuccess);
+    }
+
+    onSubmitCommentSuccess = () => {
+        this.setState({
+            submitting: false,
+            commentContent: ''
+        });
     }
 
     render() {
         const {post} = this.props;
+        const {comments} = this.state;
+        const commentsAsArray = Object.keys(comments).map(id => {
+            return { id, ...comments[id] };
+        });
 
         return(
             <div className="post">
@@ -63,7 +102,7 @@ class Post extends React.Component {
                 <div className="content">{post.content}</div>
 
                 <div className="comment-list">
-                    {this.state.comments.map(comment =>
+                    {commentsAsArray.map(comment =>
                         <div className="comment" key={comment.id}>
                             <AuthorAndLikes item={comment} />
                             <div className="content">{comment.content}</div>
@@ -73,13 +112,19 @@ class Post extends React.Component {
 
                 <form className="comment-form">
                     <textarea
-                        value={this.commentContent}
+                        value={this.state.commentContent}
                         onChange={this.onCommentChange}
                         placeholder="Write a comment"
                         />
                     <Button className="button-submit-comment" onClick={this.onSubmitComment}>
                         Submit comment
                     </Button>
+
+                    {this.state.submitting &&
+                        <div className="feedback">
+                            Please wait...
+                        </div>
+                    }
                 </form>
             </div>
         );

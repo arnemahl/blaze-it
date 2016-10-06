@@ -30,7 +30,6 @@ export default class NewPostForm extends React.Component {
     }
 
     onSubmitSuccess = () => {
-        console.log('success');
         this.setState({
             submitting: false,
             content: ''
