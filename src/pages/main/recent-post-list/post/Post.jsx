@@ -14,11 +14,15 @@ class AuthorAndLikes extends React.Component {
     }
 
     render() {
-        const {item} = this.props;
+        const {item, onDelete} = this.props;
 
         return (
             <div className="author-and-likes">
-                <span className="author">@{item.author}</span>
+                <span className="author">
+                    @{item.author}&ensp;{onDelete &&
+                        <span className="icon-delete" onClick={() => onDelete(item)} />
+                    }
+                </span>
                 <span className="date">{new Date(item.timestamp).toISOString()}</span>
                 <span className="likes" onClick={this.addLike}>{item.likes || 0} &#10084;</span>
             </div>
@@ -45,7 +49,7 @@ class Post extends React.Component {
     receiveComment = (snap) => {
         const comments = {
             ...this.state.comments,
-            [snap.ref]: snap.val()
+            [snap.key]: snap.val()
         };
 
         this.setState({ comments });
@@ -53,7 +57,7 @@ class Post extends React.Component {
     removeComment = (snap) => {
         const {...comments} = this.state.comments;
 
-        delete comments[snap.ref];
+        delete comments[snap.key];
 
         this.setState({ comments });
     }
@@ -89,6 +93,12 @@ class Post extends React.Component {
         });
     }
 
+    deleteOwnComment = (comment) => {
+        const {post} = this.props;
+
+        FIREBASE_REF.child('comments-to').child(post.id).child(comment.id).remove();
+    }
+
     render() {
         const {post} = this.props;
         const {comments} = this.state;
@@ -104,7 +114,7 @@ class Post extends React.Component {
                 <div className="comment-list">
                     {commentsAsArray.map(comment =>
                         <div className="comment" key={comment.id}>
-                            <AuthorAndLikes item={comment} />
+                            <AuthorAndLikes item={comment} onDelete={comment.author === store.currentUserId && this.deleteOwnComment} />
                             <div className="content">{comment.content}</div>
                         </div>
                     )}

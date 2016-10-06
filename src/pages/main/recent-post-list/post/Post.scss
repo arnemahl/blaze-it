@@ -29,6 +29,14 @@
                 color: red;
             }
         }
+        .icon-delete {
+            color: red;
+            cursor: pointer;
+
+            &::after {
+                content: '×';
+            }
+        }
     }
 
     > .content {
