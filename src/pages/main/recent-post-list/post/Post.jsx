@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 import React from 'react';
 import Button from 'components/button/Button';
 
@@ -58,7 +60,9 @@ class AuthorAndLikes extends React.Component {
                         <span className="icon-delete" onClick={() => onDelete(item)} />
                     }
                 </span>
-                <span className="date">{new Date(item.timestamp).toISOString()}</span>
+                <span className="date" title={moment(item.timestamp).format('LLL')}>
+                    {moment(item.timestamp).fromNow()}
+                </span>
                 <span className="likes" onClick={this.addLike}><span>{this.state.likes.length || 0} &#10084;</span></span>
             </div>
         );

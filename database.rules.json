@@ -5,7 +5,7 @@
 
         "posts": {
             "$post-id": {
-                ".write": "auth != null && (!data.exists() || data.child('author').val() === auth.uid)",
+                ".write": "auth != null && (!data.exists() || data.child('author').val() === auth.uid)"
             }
         },
         "comments-to": {
