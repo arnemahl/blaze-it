@@ -17,6 +17,9 @@ export default class NewPostForm extends React.Component {
         if (this.state.submitting) {
             return;
         }
+        if (!store.currentUserId) {
+            return;
+        }
 
         this.setState({ submitting: true });
 
