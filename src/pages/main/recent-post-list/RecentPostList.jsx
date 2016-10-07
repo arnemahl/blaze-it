@@ -13,14 +13,14 @@ export default class RecentPostList extends React.Component {
 
     componentWillMount() {
         // TODO order by time since last update, ascending
-        FIREBASE_REF.child('posts').limitToFirst(20).on('value', this.receivePosts);
+        FIREBASE_REF.child('posts').orderByKey().limitToLast(20).on('value', this.receivePosts);
     }
 
     receivePosts = (snap) => {
         const posts = snap.val();
         const postsArray = Object.keys(posts).map(id => {
             return { id, ...posts[id] };
-        });
+        }).reverse();
 
         this.setState({ posts: postsArray });
     }
