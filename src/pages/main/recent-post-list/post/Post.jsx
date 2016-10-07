@@ -137,6 +137,10 @@ class Post extends React.Component {
         FIREBASE_REF.child('comments-to').child(post.id).child(comment.id).remove();
     }
 
+    deleteOwnPost = (post) => {
+        FIREBASE_REF.child('posts').child(post.id).remove();
+    }
+
     render() {
         const {post} = this.props;
         const {comments} = this.state;
@@ -146,7 +150,7 @@ class Post extends React.Component {
 
         return(
             <div className="post">
-                <AuthorAndLikes item={post} />
+                <AuthorAndLikes item={post} onDelete={post.author === store.currentUser.id && this.deleteOwnPost} />
                 <div className="content">{post.content}</div>
 
                 <div className="comment-list">
