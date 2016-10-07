@@ -1,9 +1,14 @@
 import Pockito from 'pockito';
 
 const {Listenable} = Pockito.Reactito;
-const {string, object} = Pockito.Validators;
+const {string, number, undefOr} = Pockito.Validators;
+const shape = (obj) => (value) => value && Object.keys(obj).every(key => obj[key](value[key])); // TODO move to pockito
 
-const post = object; // TODO: Shape
+const post = shape({
+    content: string,
+    author: string,
+    timestamp: number
+});
 
 const store = new Listenable({
     currentUser: new Listenable({
@@ -15,6 +20,13 @@ const store = new Listenable({
             id: string,
             userName: string
         }
+    }),
+
+    users: new Listenable({
+        univalidator: shape({
+            id: string,
+            userName: undefOr(string)
+        })
     }),
 
     auth: new Listenable({
@@ -31,8 +43,7 @@ const store = new Listenable({
     }),
 
     posts: new Listenable({
-        univalidator: post,
-        initialState: {}
+        univalidator: post
     })
 });
 
