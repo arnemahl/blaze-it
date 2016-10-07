@@ -4,12 +4,21 @@
         ".write": "auth != null && !data.exists()",
 
         "posts": {
+            "$post-id": {
+                ".write": "auth != null && (!data.exists() || data.child('author').val() === auth.uid)",
+            }
         },
         "comments-to": {
             "$post-id": {
                 "$comment-id": {
-                    ".write": "!data.exists() || data.child('author').val() === auth.uid"
+                    ".write": "auth != null && (!data.exists() || data.child('author').val() === auth.uid)"
                 }
+            }
+        },
+
+        "users": {
+            "$uid": {
+                ".write": "$uid === auth.uid"
             }
         }
     }
