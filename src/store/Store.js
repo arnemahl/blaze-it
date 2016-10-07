@@ -6,12 +6,16 @@ const {string, object} = Pockito.Validators;
 const post = object; // TODO: Shape
 
 const store = new Listenable({
-    initialState: {
-        currentUserId: ''
-    },
-    validators: {
-        currentUserId: string
-    },
+    currentUser: new Listenable({
+        initialState: {
+            id: '',
+            userName: ''
+        },
+        validators: {
+            id: string,
+            userName: string
+        }
+    }),
 
     auth: new Listenable({
         initialState: {
@@ -26,16 +30,12 @@ const store = new Listenable({
         }
     }),
 
-    userSettings: new Listenable({
-        userName: ''
-    }),
-
     posts: new Listenable({
         univalidator: post,
         initialState: {}
     })
 });
 
-require('./syncUserSettings')(store);
+require('./syncCurrentUser')(store);
 
 export default store;

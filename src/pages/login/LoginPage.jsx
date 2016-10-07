@@ -118,18 +118,14 @@ class LogInForm extends Component {
 FIREBASE_APP.auth().onAuthStateChanged((user) => {
     if (!user) {
         // Not logged in
-        store.set({
-            currentUserId: ''
-        });
+        store.currentUser.set({ id: '' });
     }
 
     // Logged in
     const { uid } = user;
 
-    // Update currentUserId
-    store.set({
-        currentUserId: uid
-    });
+    // Update currentUser.id
+    store.currentUser.set({ id: uid });
 });
 
 export default class LoginPage extends Component {

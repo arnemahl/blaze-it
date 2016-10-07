@@ -11,7 +11,7 @@ import './UserSettingsPage.scss';
 class UserSettingForm extends React.Component {
 
     componentWillMount() {
-        store.userSettings.listenWhileMounted(this, this.props.userProperty);
+        store.currentUser.listenWhileMounted(this, this.props.userProperty);
     }
 
     onChange = (event) => {
@@ -24,11 +24,11 @@ class UserSettingForm extends React.Component {
         const {userProperty} = this.props;
         const value = this.state[userProperty];
 
-        if (!store.currentUserId || !value) {
+        if (!store.currentUser.id || !value) {
             return;
         }
 
-        FIREBASE_REF.child('users').child(store.currentUserId).child(userProperty).set(value);
+        FIREBASE_REF.child('users').child(store.currentUser.id).child(userProperty).set(value);
     }
 
     render() {
@@ -48,7 +48,7 @@ class UserSettingForm extends React.Component {
 export default class UserSettingsPage extends React.Component {
 
     componentWillMount() {
-        store.userSettings.listenWhileMounted(this, 'userName');
+        store.currentUser.listenWhileMounted(this, 'userName');
     }
 
     render() {

@@ -28,14 +28,14 @@ class AuthorAndLikes extends React.Component {
     }
 
     addLike = () => {
-        if (!store.currentUserId) {
+        if (!store.currentUser.id) {
             return;
         }
 
         const {item} = this.props;
 
         FIREBASE_REF.child('likes-to').child(item.id).push({
-            author: store.currentUserId,
+            author: store.currentUser.id,
             timestamp: TIMESTAMP
         });
     }
@@ -99,7 +99,7 @@ class Post extends React.Component {
         if (this.state.submitting) {
             return;
         }
-        if (!store.currentUserId) {
+        if (!store.currentUser.id) {
             return;
         }
 
@@ -108,7 +108,7 @@ class Post extends React.Component {
         const comment = {
             timestamp: TIMESTAMP,
             content: this.state.commentContent,
-            author: store.currentUserId
+            author: store.currentUser.id
         };
 
         const {post} = this.props;
@@ -144,7 +144,7 @@ class Post extends React.Component {
                 <div className="comment-list">
                     {commentsAsArray.map(comment =>
                         <div className="comment" key={comment.id}>
-                            <AuthorAndLikes item={comment} onDelete={comment.author === store.currentUserId && this.deleteOwnComment} />
+                            <AuthorAndLikes item={comment} onDelete={comment.author === store.currentUser.id && this.deleteOwnComment} />
                             <div className="content">{comment.content}</div>
                         </div>
                     )}

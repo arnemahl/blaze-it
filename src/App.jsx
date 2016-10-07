@@ -13,11 +13,11 @@ import 'App.scss';
 class App extends React.Component {
 
     componentWillMount() {
-        store.listenWhileMounted(this, 'currentUserId');
+        store.currentUser.listenWhileMounted(this, 'id');
     }
 
     componentWillUpdate() {
-        const {currentUserId} = store;
+        const currentUserId = store.currentUser.id;
 
         if (!currentUserId) {
             if (window.location.hash !== '#/login') {

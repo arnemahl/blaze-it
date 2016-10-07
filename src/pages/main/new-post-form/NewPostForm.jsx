@@ -17,7 +17,7 @@ export default class NewPostForm extends React.Component {
         if (this.state.submitting) {
             return;
         }
-        if (!store.currentUserId) {
+        if (!store.currentUser.id) {
             return;
         }
 
@@ -26,7 +26,7 @@ export default class NewPostForm extends React.Component {
         const post = {
             timestamp: TIMESTAMP,
             content: this.state.content,
-            author: store.currentUserId
+            author: store.currentUser.id
         };
 
         FIREBASE_REF.child('posts').push(post, this.onSubmitSuccess);
