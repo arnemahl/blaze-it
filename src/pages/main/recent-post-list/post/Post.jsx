@@ -2,6 +2,7 @@ import React from 'react';
 import Button from 'components/button/Button';
 
 import store from 'store/Store';
+import syncUser from 'store/actions/syncUser';
 
 import {FIREBASE_REF, TIMESTAMP} from 'MyFirebase';
 
@@ -17,6 +18,12 @@ class AuthorAndLikes extends React.Component {
         const {item} = this.props;
 
         FIREBASE_REF.child('likes-to').child(item.id).on('child_added', this.receiveLike);
+
+        if (!store.users[item.author]) {
+            syncUser(item.author);
+        }
+
+        store.users.listenWhileMounted(this, item.author);
     }
 
     receiveLike = (snap) => {
@@ -42,11 +49,12 @@ class AuthorAndLikes extends React.Component {
 
     render() {
         const {item, onDelete} = this.props;
+        const authorName = this.state[item.author].userName;
 
         return (
             <div className="author-and-likes">
                 <span className="author">
-                    @{item.author}&ensp;{onDelete &&
+                    @{authorName}&ensp;{onDelete &&
                         <span className="icon-delete" onClick={() => onDelete(item)} />
                     }
                 </span>
