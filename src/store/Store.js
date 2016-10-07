@@ -26,10 +26,16 @@ const store = new Listenable({
         }
     }),
 
+    userSettings: new Listenable({
+        userName: ''
+    }),
+
     posts: new Listenable({
         univalidator: post,
         initialState: {}
     })
 });
+
+require('./syncUserSettings')(store);
 
 export default store;
