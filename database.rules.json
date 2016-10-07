@@ -15,6 +15,13 @@
                 }
             }
         },
+        "likes-to": {
+            "$post-or-comment-id": {
+                "$like-id": {
+                    ".write": "auth != null && !data.exists()"
+                }
+            }
+        },
 
         "users": {
             "$uid": {

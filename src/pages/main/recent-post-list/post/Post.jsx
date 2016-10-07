@@ -9,8 +9,35 @@ import './Post.scss';
 
 class AuthorAndLikes extends React.Component {
 
+    state = {
+        likes: []
+    }
+
+    componentWillMount() {
+        const {item} = this.props;
+
+        FIREBASE_REF.child('likes-to').child(item.id).on('child_added', this.receiveLike);
+    }
+
+    receiveLike = (snap) => {
+        const {likes} = this.state;
+
+        likes.push(snap.val());
+
+        this.setState({ likes });
+    }
+
     addLike = () => {
-        console.log('TODO: Implement adding like to post/comment');
+        if (!store.currentUserId) {
+            return;
+        }
+
+        const {item} = this.props;
+
+        FIREBASE_REF.child('likes-to').child(item.id).push({
+            author: store.currentUserId,
+            timestamp: TIMESTAMP
+        });
     }
 
     render() {
@@ -24,7 +51,7 @@ class AuthorAndLikes extends React.Component {
                     }
                 </span>
                 <span className="date">{new Date(item.timestamp).toISOString()}</span>
-                <span className="likes" onClick={this.addLike}>{item.likes || 0} &#10084;</span>
+                <span className="likes" onClick={this.addLike}><span>{this.state.likes.length || 0} &#10084;</span></span>
             </div>
         );
     }
