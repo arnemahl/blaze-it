@@ -1,18 +1,10 @@
-# Wooperate
+<img src="public/favicon.png" />
+
+# [Wooperate](https://wooperate.firebaseapp.com/?#/login)
 
 Simple imitation of [woop-frontend](https://github.com/iterate/woop-frontend).
 
-This is part of my [Firebase workshop](https://github.com/arnemahl/firebase-workshop), and uses the same App setup.
+Made with [Firebase](https://firebase.google.com/), [React](https://github.com/facebook/react#react----) and [Pockito](https://github.com/arnemahl/pockito).
 
-# Lesson
-
-Set up a Firebase app with hosting and authentication, and decide on a database structure and implement the database API-calls in order to:
-
-* Write
-    * Create new posts
-        * With content, author, and ServerValue.TIMESTAMP
-    * Write comments on posts
-        * With content, author, and ServerValue.TIMESTAMP
-    * Like posts
-* Read
-    * Get realtime updates of posts, comments and likes
+## Learning Firebase
+This was initially intended as part of my [Firebase workshop](https://github.com/arnemahl/firebase-workshop), and uses the same App setup.
