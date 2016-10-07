@@ -25,13 +25,19 @@ class AuthorAndLikes extends React.Component {
             syncUser(item.author);
         }
 
-        store.users.listenWhileMounted(this, item.author);
+        store.users.listenWhileMounted(this);
     }
 
     receiveLike = (snap) => {
+        const like = snap.val();
+
+        // Sync like.author
+        syncUser(like.author);
+
+        // Add like to state
         const {likes} = this.state;
 
-        likes.push(snap.val());
+        likes.push(like);
 
         this.setState({ likes });
     }
@@ -53,6 +59,11 @@ class AuthorAndLikes extends React.Component {
         const {item, onDelete} = this.props;
         const authorName = this.state[item.author].userName;
 
+        const peopleWhoLiked = this.state.likes
+            .map(like => this.state[like.author])
+            .map(likeAuthor => likeAuthor.userName)
+            .join('\n');
+
         return (
             <div className="author-and-likes">
                 <span className="author">
@@ -63,7 +74,9 @@ class AuthorAndLikes extends React.Component {
                 <span className="date" title={moment(item.timestamp).format('LLL')}>
                     {moment(item.timestamp).fromNow()}
                 </span>
-                <span className="likes" onClick={this.addLike}><span>{this.state.likes.length || 0} &#10084;</span></span>
+                <span className="likes" onClick={this.addLike} title={peopleWhoLiked}>
+                    <span>{this.state.likes.length} &#10084;</span>
+                </span>
             </div>
         );
     }
