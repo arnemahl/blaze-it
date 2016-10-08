@@ -1,0 +1,13 @@
+@import '../../styles/colors';
+
+a.our-fancy-linky-button {
+    cursor: pointer;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    background-color: $fb-blue;
+    font-size: 16px;
+
+    text-decoration: none;
+    display: inline-block;
+}

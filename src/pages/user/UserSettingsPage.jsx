@@ -60,6 +60,8 @@ export default class UserSettingsPage extends React.Component {
                     Hello {userName}!
                 </h1>
                 <UserSettingForm userProperty="userName">User name</UserSettingForm>
+                <UserSettingForm userProperty="birthday">Birthday</UserSettingForm>
+                <UserSettingForm userProperty="interests">Your interests</UserSettingForm>
             </div>
         );
     }

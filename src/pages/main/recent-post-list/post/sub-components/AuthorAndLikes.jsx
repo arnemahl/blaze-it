@@ -63,7 +63,9 @@ export default class AuthorAndLikes extends React.Component {
         return (
             <div className="author-and-likes">
                 <span className="author">
-                    @{authorName}&ensp;{onDelete &&
+                    <a href={`#/user/${item.author}`}>@{authorName}</a>
+                    &ensp;
+                    {onDelete &&
                         <span className="icon-delete" onClick={() => onDelete(item)} />
                     }
                 </span>

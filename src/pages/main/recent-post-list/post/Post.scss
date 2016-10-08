@@ -17,6 +17,17 @@
 
         > .author {
             color: $fb-yellow;
+            a {
+                color: inherit;
+            }
+            > .icon-delete {
+                color: red;
+                cursor: pointer;
+
+                &::after {
+                    content: '×';
+                }
+            }
         }
         > .date {
             >.date-created {
@@ -40,14 +51,6 @@
             cursor: pointer;
             :hover {
                 color: $fb-blue;
-            }
-        }
-        .icon-delete {
-            color: red;
-            cursor: pointer;
-
-            &::after {
-                content: '×';
             }
         }
     }

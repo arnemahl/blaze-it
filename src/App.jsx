@@ -7,6 +7,7 @@ import store from 'store/Store';
 import MainPage from 'pages/main/MainPage.jsx';
 import LoginPage from 'pages/login/LoginPage.jsx';
 import UserSettingsPage from 'pages/user/UserSettingsPage.jsx';
+import UserPresentationPage from 'pages/user-presentation/UserPresentationPage.jsx';
 
 import 'App.scss';
 
@@ -42,6 +43,8 @@ export default (
 
             <Route path="user-settings" component={UserSettingsPage} />
             <Redirect from="user" to="user-settings" />
+
+            <Route path="user/:uid" component={UserPresentationPage} />
 
             <Route path="login" component={LoginPage}/>
         </Route>
