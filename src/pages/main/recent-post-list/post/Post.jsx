@@ -1,10 +1,6 @@
 import moment from 'moment';
-
-const markdown = require('markdown-it')({
-    highlight: (str/*, lang*/) => {
-        return `<span class="code-block">${str}</span>`;
-    }
-});
+import markdown from './my-markdown';
+import fixPostOrComment from 'util/fixPostOrComment';
 
 import React from 'react';
 import Button from 'components/button/Button';
@@ -88,11 +84,73 @@ class AuthorAndLikes extends React.Component {
     }
 }
 
+
+class NewCommentForm extends React.Component {
+
+    state = {
+        content: '',
+        submitting: false
+    }
+
+    onCommentChange = (event) => {
+        this.setState({
+            content: fixPostOrComment(event.target.value)
+        });
+    }
+
+    onSubmitComment = () => {
+        if (this.state.submitting) {
+            return;
+        }
+        if (!store.currentUser.id) {
+            return;
+        }
+
+        this.setState({ submitting: true });
+
+        const comment = {
+            timestamp: TIMESTAMP,
+            content: this.state.content,
+            author: store.currentUser.id
+        };
+
+        const {post} = this.props;
+
+        FIREBASE_REF.child('comments-to').child(post.id).push(comment, this.onSubmitCommentSuccess);
+    }
+
+    onSubmitCommentSuccess = () => {
+        this.setState({
+            submitting: false,
+            content: ''
+        });
+    }
+
+    render() {
+        return (
+            <form className="comment-form">
+                <textarea
+                    value={this.state.content}
+                    onChange={this.onCommentChange}
+                    placeholder="Write a comment"
+                    />
+                <Button className="button-submit-comment" onClick={this.onSubmitComment}>
+                    Submit comment
+                </Button>
+
+                {this.state.submitting &&
+                    <div className="feedback">
+                        Please wait...
+                    </div>
+                }
+            </form>
+        );
+    }
+}
+
 class Post extends React.Component {
 
     state = {
-        commentContent: '',
-        submitting: false,
         comments: {}
     }
 
@@ -118,40 +176,6 @@ class Post extends React.Component {
         delete comments[snap.key];
 
         this.setState({ comments });
-    }
-
-    onCommentChange = (event) => {
-        this.setState({
-            commentContent: event.target.value
-        });
-    }
-
-    onSubmitComment = () => {
-        if (this.state.submitting) {
-            return;
-        }
-        if (!store.currentUser.id) {
-            return;
-        }
-
-        this.setState({ submitting: true });
-
-        const comment = {
-            timestamp: TIMESTAMP,
-            content: this.state.commentContent,
-            author: store.currentUser.id
-        };
-
-        const {post} = this.props;
-
-        FIREBASE_REF.child('comments-to').child(post.id).push(comment, this.onSubmitCommentSuccess);
-    }
-
-    onSubmitCommentSuccess = () => {
-        this.setState({
-            submitting: false,
-            commentContent: ''
-        });
     }
 
     deleteOwnComment = (comment) => {
@@ -185,22 +209,7 @@ class Post extends React.Component {
                     )}
                 </div>
 
-                <form className="comment-form">
-                    <textarea
-                        value={this.state.commentContent}
-                        onChange={this.onCommentChange}
-                        placeholder="Write a comment"
-                        />
-                    <Button className="button-submit-comment" onClick={this.onSubmitComment}>
-                        Submit comment
-                    </Button>
-
-                    {this.state.submitting &&
-                        <div className="feedback">
-                            Please wait...
-                        </div>
-                    }
-                </form>
+                <NewCommentForm post={post} />
             </div>
         );
     }

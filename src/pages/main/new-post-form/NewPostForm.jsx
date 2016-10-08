@@ -1,3 +1,5 @@
+import fixPostOrComment from 'util/fixPostOrComment';
+
 import React from 'react';
 import Button from 'components/button/Button';
 
@@ -41,7 +43,7 @@ export default class NewPostForm extends React.Component {
 
     onContentChange = (event) => {
         this.setState({
-            content: event.target.value
+            content: fixPostOrComment(event.target.value)
         });
     }
 
