@@ -56,7 +56,7 @@ export default class NewPostForm extends React.Component {
                 <textarea
                     value={this.state.content}
                     onChange={this.onContentChange}
-                    placeholder="Write a new messsage for all to see"
+                    placeholder="Write a new post for all to see"
                     />
                 <Button className="button-submit-post" onClick={this.onSubmit}>
                     Submit post
