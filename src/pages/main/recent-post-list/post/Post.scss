@@ -39,15 +39,22 @@
         }
     }
 
+    .markdown {
+        text-align: left;
+        padding: 1px 10px;
+        line-height: 1.5;
+
+        p {
+            margin: 0.9em 0;
+        }
+    }
+
     > .content {
         background-color: white;
-        text-align: left;
         display: block;
         max-width: 780px;
         margin: auto;
         font-size: 18px;
-        padding: 15px 10px;
-        line-height: 1.5;
     }
 
     > .comment-list {
@@ -58,13 +65,10 @@
 
             > .content {
                 background-color: white;
-                text-align: left;
                 display: block;
                 max-width: 780px;
                 margin: auto;
                 font-size: 18px;
-                padding: 15px 10px;
-                line-height: 1.5;
             }
         }
     }

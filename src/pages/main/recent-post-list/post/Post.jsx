@@ -1,5 +1,7 @@
 import moment from 'moment';
 
+const markdown = require('markdown-it')();
+
 import React from 'react';
 import Button from 'components/button/Button';
 
@@ -168,13 +170,13 @@ class Post extends React.Component {
         return(
             <div className="post">
                 <AuthorAndLikes item={post} onDelete={post.author === store.currentUser.id && this.deleteOwnPost} />
-                <div className="content">{post.content}</div>
+                <div className="markdown content" dangerouslySetInnerHTML={{ __html: markdown.render(post.content)}} />
 
                 <div className="comment-list">
                     {commentsAsArray.map(comment =>
                         <div className="comment" key={comment.id}>
                             <AuthorAndLikes item={comment} onDelete={comment.author === store.currentUser.id && this.deleteOwnComment} />
-                            <div className="content">{comment.content}</div>
+                            <div className="markdown content" dangerouslySetInnerHTML={{ __html: markdown.render(comment.content)}} />
                         </div>
                     )}
                 </div>
