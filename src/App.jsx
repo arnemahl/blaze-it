@@ -4,6 +4,8 @@ import { createHashHistory } from 'history/lib';
 
 import store from 'store/Store';
 
+import TitleBar from 'components/title-bar/TitleBar';
+
 import MainPage from 'pages/main/MainPage.jsx';
 import LoginPage from 'pages/login/LoginPage.jsx';
 import UserSettingsPage from 'pages/user/UserSettingsPage.jsx';
@@ -32,7 +34,12 @@ class App extends React.Component {
     }
 
     render() {
-        return this.props.children;
+        return (
+            <div className="out-fancy-app">
+                <TitleBar />
+                {this.props.children}
+            </div>
+        );
     }
 }
 

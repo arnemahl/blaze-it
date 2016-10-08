@@ -1,10 +1,12 @@
 import React from 'react';
 import Button from 'components/button/Button';
+import IconWooperate from 'components/icon-wooperate/IconWooperate';
+
 import { FIREBASE_APP } from 'MyFirebase';
 
-import './LogoutBar.scss';
+import './TitleBar.scss';
 
-export default class LogoutBar extends React.Component {
+export default class TitleBar extends React.Component {
 
     state = {
         logoutErrorMessage: ''
@@ -20,13 +22,17 @@ export default class LogoutBar extends React.Component {
     }
 
     render() {
+        const {logoutErrorMessage} = this.state;
+
         return (
-            <div className="logout-bar">
+            <div className="title-bar">
+                <a href="#"><IconWooperate /></a>
+
+                <div className="error-message">{logoutErrorMessage}</div>
+
                 <Button className="button-log-out" onClick={this.onLogOut}>
                     Log out
                 </Button>
-
-                <div className="error-message">{this.state.logoutErrorMessage}</div>
             </div>
         );
     }

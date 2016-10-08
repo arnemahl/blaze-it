@@ -1,0 +1,22 @@
+@import '../../styles/colors';
+
+.title-bar {
+
+    background-color: $fb-red;
+
+    display: flex;
+    justify-content: space-between;
+
+    > a {
+        margin: 12px 14px;
+        padding: 0;
+
+        svg.icon-wooperate {
+            height: 70px;
+        }
+    }
+
+    > .button-log-out {
+        margin: auto 30px;
+    }
+}
