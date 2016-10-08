@@ -22,6 +22,9 @@ export default class NewPostForm extends React.Component {
         if (!store.currentUser.id) {
             return;
         }
+        if (!this.state.content.replace(/\s/g, '').replace(/\n/g, '')) {
+            return;
+        }
 
         this.setState({ submitting: true });
 
