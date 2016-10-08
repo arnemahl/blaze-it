@@ -1,6 +1,10 @@
 import moment from 'moment';
 
-const markdown = require('markdown-it')();
+const markdown = require('markdown-it')({
+    highlight: (str/*, lang*/) => {
+        return `<span class="code-block">${str}</span>`;
+    }
+});
 
 import React from 'react';
 import Button from 'components/button/Button';

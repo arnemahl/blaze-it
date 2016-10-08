@@ -47,6 +47,16 @@
         p {
             margin: 0.9em 0;
         }
+        code,
+        .code-block {
+            color: greenyellow;
+            background-color: #666;
+            padding: 4px 1px;
+            border-radius: 0.1em;
+        }
+        code {
+            padding: 4px 2px;
+        }
     }
 
     > .content {
