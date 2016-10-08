@@ -19,7 +19,20 @@
             color: $fb-yellow;
         }
         > .date {
-            color: #555;
+            >.date-created {
+                color: #555;
+
+                &.edit-on-click {
+                    text-decoration: underline;
+                    cursor: pointer;
+                }
+            }
+            > .date-edited {
+                margin-left: 5px;
+                color: #777;
+                font-size: 80%;
+                font-style: italic;
+            }
         }
         > .likes {
             color: crimson;
@@ -63,7 +76,7 @@
         }
     }
 
-    > .content {
+    > .actual-post > .content {
         background-color: white;
         display: block;
         max-width: 780px;
@@ -87,7 +100,9 @@
         }
     }
 
-    > .comment-form {
+    > .comment-form,
+    > .comment-list > .edit-comment-form,
+    > .edit-post-form {
         margin-top: 30px;
         display: block;
         padding: 15px;
@@ -113,6 +128,34 @@
 
         .feedback {
             padding-bottom: 10px;
+        }
+    }
+    > .comment-list > .edit-comment-form {
+        max-width: 700px;
+
+        .button-submit-changes {
+            margin: 10px;
+            margin-left: auto;
+        }
+        .button-cancel {
+            margin: 10px;
+            margin-right: auto;
+        }
+
+        textarea {
+            width: 650px;
+            max-width: 650px;
+        }
+    }
+    > .edit-post-form {
+
+        .button-submit-changes {
+            margin: 10px;
+            margin-left: auto;
+        }
+        .button-cancel {
+            margin: 10px;
+            margin-right: auto;
         }
     }
 }

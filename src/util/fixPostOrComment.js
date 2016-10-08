@@ -32,9 +32,7 @@ const replaceAtUserNameWithAtUserId = (text) => {
     let i = 0;
 
     while (index > -1 && i++ < 5) {
-        console.log(index);
         index++; // Move past the '@'
-        console.log(index);
 
         const replace = getFunctionToReplaceUserNameWithUserId(text, index);
 
