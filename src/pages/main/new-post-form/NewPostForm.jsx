@@ -30,6 +30,7 @@ export default class NewPostForm extends React.Component {
 
         const post = {
             timestamp: TIMESTAMP,
+            lastActivity: TIMESTAMP,
             content: this.state.content,
             author: store.currentUser.id
         };

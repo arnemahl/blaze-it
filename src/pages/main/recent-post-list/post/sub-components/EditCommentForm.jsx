@@ -42,15 +42,14 @@ export default class EditCommentForm extends React.Component {
         const {originalComment} = this.props;
 
         const updatedComment = {
-            timestamp: originalComment.timestamp,
             edited: TIMESTAMP,
-            content: this.state.content,
-            author: store.currentUser.id
+            content: this.state.content
         };
 
         const {post} = this.props;
 
         FIREBASE_REF.child('comments-to').child(post.id).child(originalComment.id).update(updatedComment, this.onSubmitCommentSuccess);
+        FIREBASE_REF.child('posts').child(post.id).child('lastActivity').set(TIMESTAMP);
     }
 
     render() {

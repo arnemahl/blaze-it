@@ -48,6 +48,7 @@ export default class NewCommentForm extends React.Component {
         const {post} = this.props;
 
         FIREBASE_REF.child('comments-to').child(post.id).push(comment, this.onSubmitCommentSuccess);
+        FIREBASE_REF.child('posts').child(post.id).child('lastActivity').set(TIMESTAMP);
     }
 
     render() {

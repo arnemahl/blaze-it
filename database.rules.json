@@ -5,7 +5,13 @@
 
         "posts": {
             "$post-id": {
-                ".write": "auth != null && (!data.exists() || data.child('author').val() === auth.uid)"
+                ".write": "auth != null && (!data.exists() || data.child('author').val() === auth.uid)",
+
+                ".indexOn": "lastActivity",
+                "lastActivity": {
+                    ".write": "auth != null",
+                    ".validate": "newData.val() >= now"
+                }
             }
         },
         "comments-to": {

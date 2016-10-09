@@ -42,10 +42,9 @@ export default class EditPostForm extends React.Component {
         const {originalPost} = this.props;
 
         const updatedPost = {
-            timestamp: originalPost.timestamp,
+            lastActivity: TIMESTAMP,
             edited: TIMESTAMP,
-            content: this.state.content,
-            author: store.currentUser.id
+            content: this.state.content
         };
 
         FIREBASE_REF.child('posts').child(originalPost.id).update(updatedPost, this.onSubmitCommentSuccess);
