@@ -9,5 +9,8 @@ const config = {
 };
 
 export const FIREBASE_APP = firebase.initializeApp(config);
+
 export const FIREBASE_REF = FIREBASE_APP.database().ref();
 export const TIMESTAMP = firebase.database.ServerValue.TIMESTAMP;
+
+export const FIREBASE_STORAGE = firebase.storage();

@@ -2,6 +2,7 @@ import fixPostOrComment from 'util/fixPostOrComment';
 
 import React from 'react';
 import Button from 'components/button/Button';
+import ButtonUploadImage, {insertImage} from 'components/button/ButtonUploadImage';
 
 import {FIREBASE_REF, TIMESTAMP} from 'MyFirebase';
 import store from 'store/Store';
@@ -51,17 +52,33 @@ export default class NewPostForm extends React.Component {
         });
     }
 
+    onImageUploadComplete = (url) => {
+        const cursorPos = this.refs.textarea.selectionStart;
+
+        this.setState({
+            content: insertImage(this.state.content, url, cursorPos)
+        });
+    }
+
     render() {
         return (
             <form className="new-post-form">
                 <textarea
+                    ref="textarea"
                     value={this.state.content}
                     onChange={this.onContentChange}
                     placeholder="Write a new post for all to see"
                     />
-                <Button className="button-submit-post" onClick={this.onSubmit}>
-                    Submit post
-                </Button>
+
+                <span className="buttons">
+                    <ButtonUploadImage className="button-add-image-from-disk" onImageUploadComplete={this.onImageUploadComplete}>
+                        Add image from disk
+                    </ButtonUploadImage>
+
+                    <Button className="button-submit-post" onClick={this.onSubmit}>
+                        Submit post
+                    </Button>
+                </span>
 
                 {this.state.submitting &&
                     <div className="feedback">

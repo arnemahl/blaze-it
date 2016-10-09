@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from 'components/button/Button';
+import ButtonUploadImage, {insertImage} from 'components/button/ButtonUploadImage';
 
 import store from 'store/Store';
 
@@ -52,20 +53,35 @@ export default class EditCommentForm extends React.Component {
         FIREBASE_REF.child('posts').child(post.id).child('lastActivity').set(TIMESTAMP);
     }
 
+    onImageUploadComplete = (url) => {
+        const cursorPos = this.refs.textarea.selectionStart;
+
+        this.setState({
+            content: insertImage(this.state.content, url, cursorPos)
+        });
+    }
+
     render() {
         return (
             <form className="edit-comment-form">
                 <textarea
+                    ref="textarea"
                     value={this.state.content}
                     onChange={this.onCommentChange}
                     placeholder="Write a comment"
                     />
-                <Button className="button-submit-changes" onClick={this.onSubmitComment}>
-                    Submit changes
-                </Button>
-                <Button className="button-cancel" onClick={this.props.onEditComplete}>
-                    Cancel
-                </Button>
+
+                <span className="buttons">
+                    <ButtonUploadImage className="button-add-image-from-disk" onImageUploadComplete={this.onImageUploadComplete}>
+                        Add image from disk
+                    </ButtonUploadImage>
+                    <Button className="button-submit-changes" onClick={this.onSubmitComment}>
+                        Submit changes
+                    </Button>
+                    <Button className="button-cancel" onClick={this.props.onEditComplete}>
+                        Cancel
+                    </Button>
+                </span>
 
                 {this.state.submitting &&
                     <div className="feedback">

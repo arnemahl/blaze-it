@@ -125,8 +125,13 @@
             line-height: 1.5;
         }
 
-        .button-submit-comment {
-            margin: 10px auto;
+        > .buttons {
+            display: inline-block;
+            margin: auto;
+
+            > * {
+                margin: 10px;
+            }
         }
 
         .feedback {
@@ -136,29 +141,19 @@
     > .comment-list > .edit-comment-form {
         max-width: 700px;
 
-        .button-submit-changes {
-            margin: 10px;
-            margin-left: auto;
-        }
-        .button-cancel {
-            margin: 10px;
-            margin-right: auto;
-        }
-
         textarea {
             width: 650px;
             max-width: 650px;
         }
     }
     > .edit-post-form {
+        .buttons {
+            display: inline-block;
+            margin: auto;
 
-        .button-submit-changes {
-            margin: 10px;
-            margin-left: auto;
-        }
-        .button-cancel {
-            margin: 10px;
-            margin-right: auto;
+            > * {
+                margin: 10px;
+            }
         }
     }
 }

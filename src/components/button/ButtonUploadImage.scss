@@ -1,0 +1,9 @@
+@import '../../styles/colors';
+
+.our-hacky-file-input {
+
+    > input[type=file] {
+        color: blue;
+        display: none;
+    }
+}

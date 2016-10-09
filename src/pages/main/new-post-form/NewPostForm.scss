@@ -20,8 +20,13 @@
         line-height: 1.5;
     }
 
-    .button-submit-post {
-        margin: 15px auto;
+    > .buttons {
+        display: inline-block;
+        margin: auto;
+
+        > * {
+            margin: 15px;
+        }
     }
 
     .feedback {

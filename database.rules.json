@@ -33,6 +33,12 @@
             "$uid": {
                 ".write": "$uid === auth.uid"
             }
+        },
+
+        "files-uploaded-by": {
+            "$uid": {
+                ".write": "$uid === auth.uid"
+            }
         }
     }
 }

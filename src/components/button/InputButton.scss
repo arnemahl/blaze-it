@@ -1,0 +1,10 @@
+@import '../../styles/colors';
+
+input.our-fancy-input-button {
+    cursor: pointer;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    background-color: $fb-blue;
+    font-size: 16px;
+}
