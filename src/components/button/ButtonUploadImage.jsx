@@ -15,10 +15,20 @@ export default class ButtonUploadImage extends React.Component {
     }
 
     state = {
-        showDialog: false
+        upload: {
+            task: null,
+            paused: false,
+            progress: 0
+        },
+        feedback: false
     };
 
     onClick = () => {
+        if (this.state.upload.task) {
+            // Only allow one upload at a time
+            return;
+        }
+
         this.refs.fileInput && this.refs.fileInput.click();
     }
 
@@ -33,19 +43,49 @@ export default class ButtonUploadImage extends React.Component {
 
         const uploadTask = firebase.storage().ref().child('images').child(selectedFile.name).put(selectedFile);
 
-        uploadTask.on(STATE_CHANGED, this.onUploaStateChanged, this.onUploadError, () => this.onUploadSuccess(uploadTask));
+        uploadTask.on(STATE_CHANGED, this.onUploaStateChanged, this.onUploadError, this.onUploadSuccess);
+
+        this.setState({
+            upload: {
+                task: uploadTask,
+                paused: false,
+                progress: 0
+            },
+            feedback: {
+                short: 'Starting upload'
+            }
+        });
     }
 
     onUploaStateChanged = (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(`Upload progress: ${progress}%`);
 
         switch (snapshot.state) {
             case PAUSED:
-                console.log('Upload is paused');
+                this.setState({
+                    upload: {
+                        task: this.state.upload.task,
+                        paused: true,
+                        progress
+                    },
+                    feedback: {
+                        short: `Upload paused`,
+                        details: `Upload paused at ${progress}%`
+                    }
+                });
                 break;
             case RUNNING:
-                console.log('Upload is running');
+                this.setState({
+                    upload: {
+                        task: this.state.upload.task,
+                        paused: false,
+                        progress
+                    },
+                    feedback: {
+                        short: `Uploading: ${progress}%`,
+                        details: `Click to pause upload`
+                    }
+                });
                 break;
         }
     }
@@ -54,29 +94,90 @@ export default class ButtonUploadImage extends React.Component {
         switch (error.code) {
             case 'storage/unauthorized':
                 // User doesn't have permission to access the object
+                this.setState({
+                    upload: {},
+                    feedback: {
+                        short: 'Upload error',
+                        details: 'Upload error: It seems you are trying to overwrite an image. Try changing the file-name.'
+                    }
+                });
                 break;
     
             case 'storage/canceled':
                 // User canceled the upload
+                this.setState({
+                    upload: {},
+                    feedback: false
+                });
                 break;
     
             case 'storage/unknown':
                 // Unknown error occurred, inspect error.serverResponse
+                this.setState({
+                    upload: {},
+                    feedback: {
+                        short: 'Upload error',
+                        details: 'Upload error: An unknown error occurred. ¯\_(ツ)_/¯'
+                    }
+                });
                 break;
         }
     }
 
-    onUploadSuccess(uploadTask) {
-        const downloadURL = uploadTask.snapshot.downloadURL;
+    onUploadSuccess = () => {
+        const downloadURL = this.state.upload.task.snapshot.downloadURL;
+
+        this.setState({
+            upload: {},
+            feedback: false
+        });
 
         firebase.database().ref().child('files-uploaded-by').child(store.currentUser.id).push(downloadURL);
         this.props.onImageUploadComplete(downloadURL);
     }
 
+    pauseOrResumeUpload = () => {
+        const { upload } = this.state;
+
+        if (!upload.task) {
+            return;
+        }
+
+        upload.paused
+            ? upload.task.resume()
+            : upload.task.pause();
+    }
+
+    cancelUpload = () => {
+        const { upload } = this.state;
+
+        if (!upload.task) {
+            return;
+        }
+        if (upload.paused) {
+            upload.task.resume(); // Cannot cancel a paused task for some reason
+        }
+        upload.task.cancel();
+    }
+
     render() {
+        const {upload, feedback} = this.state;
+
         return (
             <span className="our-hacky-file-input">
-                <Button onClick={this.onClick} {...this.props} />
+                { !upload.task
+                    ? <Button onClick={this.onClick} {...this.props} />
+                    : (
+                        <span className="upload-status">
+                            <span className="upload-feedback" title={feedback.details} onClick={this.pauseOrResumeUpload}>
+                                {feedback.short}
+                            </span>
+                            { upload.task &&
+                                <span className="icon-cancel-upload" onClick={this.cancelUpload} />
+                            }
+                        </span>
+                    )
+                }
                 <input type="file" ref="fileInput" onChange={this.onFileSelected} />
             </span>
         );

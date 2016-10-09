@@ -2,6 +2,23 @@
 
 .our-hacky-file-input {
 
+    > .upload-status {
+        > .upload-feedback {
+            color: $fb-blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        > .icon-cancel-upload {
+            margin-left: 5px;
+            color: red;
+            cursor: pointer;
+
+            &::after {
+                content: '×';
+            }
+        }
+    }
+
     > input[type=file] {
         color: blue;
         display: none;
