@@ -2,9 +2,9 @@
 
 .post {
     display: block;
-    margin: 50px auto;
-    padding: 20px;
-    max-width: 800px;
+    margin: 5rem auto;
+    padding: 2rem;
+    max-width: 80rem;
 
     background-color: $fb-red;
 
@@ -12,8 +12,8 @@
         display: flex;
         justify-content: space-between;
 
-        padding: 10px 0 5px;
-        font-size: 18px;
+        padding: 1rem 0 0.5rem;
+        font-size: 1.8rem;
 
         > .author {
             color: $fb-yellow;
@@ -39,7 +39,7 @@
                 }
             }
             > .date-edited {
-                margin-left: 5px;
+                margin-left: 0.5rem;
                 color: #777;
                 font-size: 80%;
                 font-style: italic;
@@ -56,8 +56,9 @@
     }
 
     .markdown {
+        font-size: 1.5rem;
         text-align: left;
-        padding: 1px 10px;
+        padding: .1rem 1rem;
         line-height: 1.5;
 
         p {
@@ -67,11 +68,11 @@
         .code-block {
             color: greenyellow;
             background-color: #666;
-            padding: 4px 1px;
+            padding: 0.4rem 0.1rem;
             border-radius: 0.1em;
         }
         code {
-            padding: 4px 2px;
+            padding: 0.4rem 0.2rem;
         }
 
         a {
@@ -82,23 +83,23 @@
     > .actual-post > .content {
         background-color: white;
         display: block;
-        max-width: 780px;
+        max-width: 78rem;
         margin: auto;
-        font-size: 18px;
+        font-size: 1.8rem;
     }
 
     > .comment-list {
         padding-left: 12%;
 
         > .comment {
-            margin-top: 10px;
+            margin-top: 1rem;
 
             > .content {
                 background-color: white;
                 display: block;
-                max-width: 780px;
+                max-width: 78rem;
                 margin: auto;
-                font-size: 18px;
+                font-size: 1.8rem;
             }
         }
     }
@@ -106,22 +107,22 @@
     > .comment-form,
     > .comment-list > .edit-comment-form,
     > .edit-post-form {
-        margin-top: 30px;
+        margin-top: 3rem;
         display: block;
-        padding: 15px;
+        padding: 1.5rem;
         padding-bottom: 0;
-        max-width: 800px;
+        max-width: 80rem;
 
         background-color: $fb-yellow; 
 
         textarea {
             display: block;
-            width: 750px;
-            max-width: 750px;
-            height: 80px;
+            width: 75rem;
+            max-width: 75rem;
+            height: 8rem;
             margin: auto;
-            font-size: 18px;
-            padding: 5px 10px;
+            font-size: 1.8rem;
+            padding: 0.5rem 1rem;
             line-height: 1.5;
         }
 
@@ -130,20 +131,20 @@
             margin: auto;
 
             > * {
-                margin: 10px;
+                margin: 1rem;
             }
         }
 
         .feedback {
-            padding-bottom: 10px;
+            padding-bottom: 1rem;
         }
     }
     > .comment-list > .edit-comment-form {
-        max-width: 700px;
+        max-width: 70rem;
 
         textarea {
-            width: 650px;
-            max-width: 650px;
+            width: 65rem;
+            max-width: 65rem;
         }
     }
     > .edit-post-form {
@@ -152,7 +153,7 @@
             margin: auto;
 
             > * {
-                margin: 10px;
+                margin: 1rem;
             }
         }
     }
