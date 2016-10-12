@@ -4,7 +4,9 @@ import {FIREBASE_REF} from 'MyFirebase';
 const syncedUsers = [];
 
 export default function syncUser(uid) {
-    if (syncedUsers.indexOf(uid) > -1) {
+    if (!uid) {
+        throw Error(`syncUser was called with invalid argument: ${typeof uid} ${uid}`);
+    } else if (syncedUsers.indexOf(uid) > -1) {
         return;
     } else {
         syncedUsers.push(uid);

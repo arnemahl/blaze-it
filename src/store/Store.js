@@ -1,7 +1,7 @@
 import Pockito from 'pockito';
 
 const {Listenable} = Pockito.Reactito;
-const {string, number, undefOr} = Pockito.Validators;
+const {string, possiblyEmptyString, number, undefOr} = Pockito.Validators;
 const shape = (obj) => (value) => value && Object.keys(obj).every(key => obj[key](value[key])); // TODO move to pockito
 
 const post = shape({
@@ -17,8 +17,8 @@ const store = new Listenable({
             userName: ''
         },
         validators: {
-            id: string,
-            userName: string
+            id: possiblyEmptyString,
+            userName: possiblyEmptyString
         }
     }),
 

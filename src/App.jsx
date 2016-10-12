@@ -13,24 +13,43 @@ import UserPresentationPage from 'pages/user-presentation/UserPresentationPage.j
 
 import 'App.scss';
 
+import { FIREBASE_APP } from 'MyFirebase';
+
+function redirectDependingOnAuth(isLoggedIn) {
+    if (!isLoggedIn) {
+        if (window.location.hash !== '#/login') {
+            window.location.hash = '/login';
+        }
+    } else {
+        if (window.location.hash === '#/login') {
+            window.location.hash = '/';
+        }
+    }
+}
+
+FIREBASE_APP.auth().onAuthStateChanged((user) => {
+    redirectDependingOnAuth(!!user);
+
+    if (!user) {
+        // Not logged in
+        store.currentUser.set({ id: '' });
+    } else {
+        // Logged in
+        const { uid } = user;
+
+        // Update currentUser.id
+        store.currentUser.set({ id: uid });
+    }
+});
+
 class App extends React.Component {
 
     componentWillMount() {
-        store.currentUser.listenWhileMounted(this, 'id');
+        store.currentUser.listenWhileMountedRemap(this, {id: 'currentUserId'});
     }
 
-    componentWillUpdate() {
-        const currentUserId = store.currentUser.id;
-
-        if (!currentUserId) {
-            if (window.location.hash !== '#/login') {
-                window.location.hash = '/login';
-            }
-        } else {
-            if (window.location.hash === '#/login') {
-                window.location.hash = '/';
-            }
-        }
+    componentWillReceiveProps() {
+        redirectDependingOnAuth(!!this.state.currentUserId);
     }
 
     render() {

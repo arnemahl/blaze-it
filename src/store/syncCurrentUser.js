@@ -8,7 +8,7 @@ export default function(store) {
 
     function onUid(uid, uidLast) {
         if (uidLast) {
-            FIREBASE_REF.child('users').child(uid).off('value', receiveUserData);
+            FIREBASE_REF.child('users').child(uidLast).off('value', receiveUserData);
         }
         if (uid) {
             FIREBASE_REF.child('users').child(uid).on('value', receiveUserData);
